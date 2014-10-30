@@ -11,7 +11,7 @@ if [[ -e $CONFIG_FILE ]]; then
     }
 
     #Checking the loaded data
-    if [[ $MYSQL_USER == "" || $MYSQL_PASSWORD == "" || $MYSQL_HOST == "" || $MYSQL_DATABASE == "" ]]; then
+    if [[ $MYSQL_USER == "" || $MYSQL_PASSWORD == "" || $MYSQL_HOST == "" || $MYSQL_DATABASES == "" ]]; then
         echo -ne "Error loading data from $CONFIG_FILE...\n"
         echo -ne "It is recommended to fix .dropbox_backup\n"
         exit 1
