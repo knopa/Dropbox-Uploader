@@ -35,10 +35,10 @@ else
 		echo -n " # Mysql host: "
         read MYSQL_HOST
 		
-		echo -n " # Mysql databases with ; as semicolon: "
+		echo -n " # Mysql databases with , as semicolon: "
         read MYSQL_DATABASES
 		
-		echo -n " # Web pathes with ; as semicolon: "
+		echo -n " # Web pathes with , as semicolon: "
         read WEB_PATH
 		
         echo -ne "\n > Dropbox uploader is $UPLOADER\n Mysql user is $MYSQL_USER\n Mysql password is $MYSQL_PASSWORD\n Mysql databases are $MYSQL_DATABASES  \n Web pathes are $WEB_PATH.\n Looks ok? [y/n]: "
@@ -69,7 +69,7 @@ MYSQLDUMP="$(which mysqldump)"
 ZIP="$(which zip)"
 
 OIFS=$IFS
-IFS=';'
+IFS=','
 
 if [[ $MYSQL_DATABASES ]]; then
 for db in $MYSQL_DATABASES
