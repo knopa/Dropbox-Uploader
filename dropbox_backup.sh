@@ -67,6 +67,10 @@ mkdir -p "$BACKUPFILE"
 MYSQL="$(which mysql)"
 MYSQLDUMP="$(which mysqldump)"
 ZIP="$(which zip)"
+
+OIFS=$IFS
+IFS=';'
+
 MYSQL_DATABASES=$(echo $MYSQL_DATABASES | tr ";" "\n")
 
 if [[ $MYSQL_DATABASES ]]; then
@@ -89,7 +93,7 @@ done
 
 $UPLOADER upload "$BACKUPFILE" /
 fi
-
+IFS=$OIFS
 rm -rf "$BACKUP"
 rm -rf "$BACKUPFILE"
 
