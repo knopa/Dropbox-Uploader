@@ -71,8 +71,6 @@ ZIP="$(which zip)"
 OIFS=$IFS
 IFS=';'
 
-MYSQL_DATABASES=$(echo $MYSQL_DATABASES | tr ";" "\n")
-
 if [[ $MYSQL_DATABASES ]]; then
 for db in $MYSQL_DATABASES
 do
@@ -83,7 +81,6 @@ done
 $UPLOADER upload "$BACKUP" /
 fi
 
-WEB_PATH=$(echo $WEB_PATH | tr ";" "\n")
 if [[ $WEB_PATH ]]; then
 for web in $WEB_PATH
 do
