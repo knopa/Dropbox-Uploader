@@ -69,7 +69,7 @@ MYSQLDUMP="$(which mysqldump)"
 ZIP="$(which zip)"
 MYSQL_DATABASES=${MYSQL_DATABASES//;/$'\n'}
 
-if [[ $MYSQL_DATABASES ]]
+if [[ $MYSQL_DATABASES ]]; then
 for db in $MYSQL_DATABASES
 do
  FILE=$BACKUP/$db.zip
@@ -79,7 +79,7 @@ fi
 $UPLOADER upload "$BACKUP" /
 
 WEB_PATH=${WEB_PATH//;/$'\n'}
-if [[ $WEB_PATH ]]
+if [[ $WEB_PATH ]]; then
 for web in $WEB_PATH
 do
   $name = basename $web
