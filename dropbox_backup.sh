@@ -35,7 +35,7 @@ else
 		echo -n " # Mysql host: "
         read MYSQL_HOST
 		
-		echo -n " # Mysql databases with , as semicolon: "
+		echo -n " # Mysql databases with , as semicolon (if empty will use show databases): "
         read MYSQL_DATABASES
 		
 		echo -n " # Web pathes with , as semicolon: "
@@ -68,10 +68,12 @@ MYSQL="$(which mysql)"
 MYSQLDUMP="$(which mysqldump)"
 ZIP="$(which zip)"
 
-OIFS=$IFS
-IFS=','
+if [[ -z $MYSQL_DATABASES ]]; then
+MYSQL_DATABASES="$($MYSQL -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD -Bse 'show databases')"
+fi
 
 if [[ $MYSQL_DATABASES ]]; then
+$MYSQL_DATABASES=$(echo $IN | tr "," "\n")
 for db in $MYSQL_DATABASES
 do
  FILE=$BACKUP/$db.zip
@@ -82,6 +84,7 @@ $UPLOADER upload "$BACKUP" /
 fi
 
 if [[ $WEB_PATH ]]; then
+$WEB_PATH=$(echo $IN | tr "," "\n")
 for web in $WEB_PATH
 do
   FILENAME=$(basename $web)
