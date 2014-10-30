@@ -6,12 +6,10 @@ CONFIG_FILE=~/.dropbox_backup
 if [[ -e $CONFIG_FILE ]]; then
 
     #Loading data... and change old format config if necesary.
-    source "$CONFIG_FILE" 2>/dev/null || {
-        sed -i'' 's/:/=/' "$CONFIG_FILE" && source "$CONFIG_FILE" 2>/dev/null
-    }
+    source "$CONFIG_FILE"
 
     #Checking the loaded data
-    if [[ $MYSQL_USER == "" || $MYSQL_PASSWORD == "" || $MYSQL_HOST == "" || $MYSQL_DATABASES == "" ]]; then
+    if [[ $MYSQL_USER == "" || $MYSQL_PASSWORD == "" || $MYSQL_HOST == "" ]]; then
         echo -ne "Error loading data from $CONFIG_FILE...\n"
         echo -ne "It is recommended to fix .dropbox_backup\n"
         exit 1
