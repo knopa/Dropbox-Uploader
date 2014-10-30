@@ -82,12 +82,12 @@ WEB_PATH=${WEB_PATH//;/$'\n'}
 if [[ $WEB_PATH ]]; then
 for web in $WEB_PATH
 do
-  $name=basename $web
- $ZIP -r "$BACKUPFILE/$name.zip" $web 
+  $name=$(basename $web)
+  $ZIP -r "$BACKUPFILE/$name.zip" $web 
 done
 fi
 
-$UPLOADER upload "$WEB_PATH" /
+$UPLOADER upload "$BACKUPFILE" /
 
 rm -rf "$BACKUP"
 rm -rf "$BACKUPFILE"
