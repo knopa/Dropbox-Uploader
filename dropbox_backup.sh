@@ -35,10 +35,13 @@ else
 		echo -n " # Mysql host: "
         read MYSQL_HOST
 		
-		echo -n " # Mysql databases: "
+		echo -n " # Mysql databases with ; as semicolon: "
         read MYSQL_DATABASES
 		
-        echo -ne "\n > Dropbox uploader is $UPLOADER, Mysql user is $MYSQL_USER, Mysql password is $MYSQL_PASSWORD and Mysql databases are $MYSQL_DATABASES. Looks ok? [y/n]: "
+		echo -n " # Web pathes with ; as semicolon: "
+        read WEB_PATH
+		
+        echo -ne "\n > Dropbox uploader is $UPLOADER\n Mysql user is $MYSQL_USER\n Mysql password is $MYSQL_PASSWORD\n Mysql databases are $MYSQL_DATABASES  \n Web pathes are $WEB_PATH.\n Looks ok? [y/n]: "
         read answer
         if [[ $answer == "y" ]]; then
             break;
@@ -51,26 +54,42 @@ else
 	echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> "$CONFIG_FILE"
 	echo "MYSQL_HOST=$MYSQL_HOST" >> "$CONFIG_FILE"
 	echo "MYSQL_DATABASES=$MYSQL_DATABASES" >> "$CONFIG_FILE"
+	echo "WEB_PATH=$WEB_PATH" >> "$CONFIG_FILE"
 	
     exit 0
 fi
 
 BACKUP=/tmp/dropboxbackup/db
+BACKUPFILE=/tmp/dropboxbackup/www
 mkdir -p "$BACKUP"
+mkdir -p "$BACKUPFILE"
 
 MYSQL="$(which mysql)"
 MYSQLDUMP="$(which mysqldump)"
 ZIP="$(which zip)"
 MYSQL_DATABASES=${MYSQL_DATABASES//;/$'\n'}
 
+if [[ $MYSQL_DATABASES ]]
 for db in $MYSQL_DATABASES
 do
  FILE=$BACKUP/$db.zip
  $MYSQLDUMP --opt -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $db | $ZIP -9 > $FILE
 done
-
+fi
 $UPLOADER upload "$BACKUP" /
 
+WEB_PATH=${WEB_PATH//;/$'\n'}
+if [[ $WEB_PATH ]]
+for web in $WEB_PATH
+do
+  $name = basename $web
+ $ZIP-r "$BACKUPFILE/$name.zip" $web 
+done
+fi
+
+$UPLOADER upload "$WEB_PATH" /
+
 rm -rf "$BACKUP"
+rm -rf "$BACKUPFILE"
 
 exit 0
