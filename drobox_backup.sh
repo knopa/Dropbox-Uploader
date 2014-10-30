@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #Default configuration file
 CONFIG_FILE=~/.dropbox_backup
