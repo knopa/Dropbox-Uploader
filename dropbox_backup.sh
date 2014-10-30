@@ -47,7 +47,7 @@ else
     done
 	#Saving data in new format, compatible with source command.
 	echo "UPLOADER=$UPLOADER" > "$CONFIG_FILE"
-	echo "MYSQL_USER=$MYSQL_USER" > "$CONFIG_FILE"
+	echo "MYSQL_USER=$MYSQL_USER" >> "$CONFIG_FILE"
 	echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> "$CONFIG_FILE"
 	echo "MYSQL_HOST=$MYSQL_HOST" >> "$CONFIG_FILE"
 	echo "MYSQL_DATABASES=$MYSQL_DATABASES" >> "$CONFIG_FILE"
