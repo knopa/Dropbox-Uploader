@@ -53,8 +53,16 @@ else
 	echo "MYSQL_USER=$MYSQL_USER" >> "$CONFIG_FILE"
 	echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> "$CONFIG_FILE"
 	echo "MYSQL_HOST=$MYSQL_HOST" >> "$CONFIG_FILE"
-	echo "MYSQL_DATABASES=$MYSQL_DATABASES" >> "$CONFIG_FILE"
-	echo "WEB_PATH=$WEB_PATH" >> "$CONFIG_FILE"
+	if [[ $MYSQL_DATABASES ]]; then
+		echo "MYSQL_DATABASES=$MYSQL_DATABASES" >> "$CONFIG_FILE"
+	else
+		echo "#MYSQL_DATABASES=" >> "$CONFIG_FILE"
+	fi
+	if [[ $WEB_PATH ]]; then
+		echo "WEB_PATH=$WEB_PATH" >> "$CONFIG_FILE"
+	else
+		echo "#WEB_PATH=" >> "$CONFIG_FILE"
+	fi
 	
     exit 0
 fi
@@ -73,7 +81,7 @@ MYSQL_DATABASES="$($MYSQL -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD -Bse '
 fi
 
 if [[ $MYSQL_DATABASES ]]; then
-$MYSQL_DATABASES=$(echo $IN | tr "," "\n")
+MYSQL_DATABASES=$(echo $MYSQL_DATABASES | tr "," "\n")
 for db in $MYSQL_DATABASES
 do
  FILE=$BACKUP/$db.zip
@@ -84,7 +92,7 @@ $UPLOADER upload "$BACKUP" /
 fi
 
 if [[ $WEB_PATH ]]; then
-$WEB_PATH=$(echo $IN | tr "," "\n")
+WEB_PATH=$(echo $WEB_PATH | tr "," "\n")
 for web in $WEB_PATH
 do
   FILENAME=$(basename $web)
