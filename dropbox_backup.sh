@@ -23,7 +23,9 @@ else
 
     #Getting the app key and secret from the user
     while (true); do
-
+		echo -n " # Dropbox uploader path: "
+        read UPLOADER
+		
         echo -n " # Mysql user: "
         read MYSQL_USER
 
@@ -36,7 +38,7 @@ else
 		echo -n " # Mysql databases: "
         read MYSQL_DATABASES
 		
-        echo -ne "\n > Mysql user is $MYSQL_USER, Mysql password is $MYSQL_PASSWORD and Mysql databases are $MYSQL_DATABASES. Looks ok? [y/n]: "
+        echo -ne "\n > Dropbox uploader is $UPLOADER, Mysql user is $MYSQL_USER, Mysql password is $MYSQL_PASSWORD and Mysql databases are $MYSQL_DATABASES. Looks ok? [y/n]: "
         read answer
         if [[ $answer == "y" ]]; then
             break;
@@ -44,6 +46,7 @@ else
 
     done
 	#Saving data in new format, compatible with source command.
+	echo "UPLOADER=$UPLOADER" > "$CONFIG_FILE"
 	echo "MYSQL_USER=$MYSQL_USER" > "$CONFIG_FILE"
 	echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> "$CONFIG_FILE"
 	echo "MYSQL_HOST=$MYSQL_HOST" >> "$CONFIG_FILE"
@@ -52,21 +55,21 @@ else
     exit 0
 fi
 
-UPLOAD=dropbox_uploader.sh
 BACKUP=/tmp/dropboxbackup/db
-
 mkdir -p "$BACKUP"
+
 MYSQL="$(which mysql)"
 MYSQLDUMP="$(which mysqldump)"
 ZIP="$(which zip)"
 MYSQL_DATABASES=${MYSQL_DATABASES//;/$'\n'}
+
 for db in $MYSQL_DATABASES
 do
  FILE=$BACKUP/$db.zip
  $MYSQLDUMP --opt -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $db | $ZIP -9 > $FILE
 done
 
-$UPLOAD upload "$BACKUP" /
+$UPLOADER upload "$BACKUP" /
 
 rm -rf "$BACKUP"
 
