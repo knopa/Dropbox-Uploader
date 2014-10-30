@@ -67,7 +67,7 @@ mkdir -p "$BACKUPFILE"
 MYSQL="$(which mysql)"
 MYSQLDUMP="$(which mysqldump)"
 ZIP="$(which zip)"
-MYSQL_DATABASES=${MYSQL_DATABASES//;/$'\n'}
+MYSQL_DATABASES=$(echo $MYSQL_DATABASES | tr ";" "\n")
 
 if [[ $MYSQL_DATABASES ]]; then
 for db in $MYSQL_DATABASES
@@ -75,10 +75,11 @@ do
  FILE=$BACKUP/$db.zip
  $MYSQLDUMP --opt -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $db | $ZIP -9 > $FILE
 done
-fi
-$UPLOADER upload "$BACKUP" /
 
-WEB_PATH=${WEB_PATH//;/$'\n'}
+$UPLOADER upload "$BACKUP" /
+fi
+
+WEB_PATH=$(echo $WEB_PATH | tr ";" "\n")
 if [[ $WEB_PATH ]]; then
 for web in $WEB_PATH
 do
