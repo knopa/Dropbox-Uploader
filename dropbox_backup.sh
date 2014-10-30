@@ -85,9 +85,9 @@ do
   FILENAME=$(basename $web)
   $ZIP -r "$BACKUPFILE/$FILENAME.zip" $web 
 done
-fi
 
 $UPLOADER upload "$BACKUPFILE" /
+fi
 
 rm -rf "$BACKUP"
 rm -rf "$BACKUPFILE"
