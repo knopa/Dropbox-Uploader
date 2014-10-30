@@ -82,8 +82,10 @@ if [[ $MYSQL_DATABASES ]]; then
 MYSQL_DATABASES=$(echo $MYSQL_DATABASES | tr "," "\n")
 for db in $MYSQL_DATABASES
 do
- FILE=$BACKUP/$db.zip
- $MYSQLDUMP --opt -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $db | $ZIP -9 > $FILE
+	if [[ $db != "mysql" && $db != "/information_schema" ]]; then
+		FILE=$BACKUP/$db.zip
+		$MYSQLDUMP --opt -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $db | $ZIP -9 > $FILE
+	fi
 done
 
 $UPLOADER upload "$BACKUP" /
