@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Default configuration file
-CONFIG_FILE=~/.dropbox_backup
+CONFIG_FILE=/etc/dropbox_backup.conf
 
 if [[ -e $CONFIG_FILE ]]; then
 
@@ -11,7 +11,7 @@ if [[ -e $CONFIG_FILE ]]; then
     #Checking the loaded data
     if [[ $MYSQL_USER == "" || $MYSQL_PASSWORD == "" || $MYSQL_HOST == "" ]]; then
         echo -ne "Error loading data from $CONFIG_FILE...\n"
-        echo -ne "It is recommended to fix .dropbox_backup\n"
+        echo -ne "It is recommended to fix dropbox_backup.conf\n"
         exit 1
     fi
 
