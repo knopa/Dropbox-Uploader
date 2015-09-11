@@ -87,6 +87,7 @@ do
 	    FILEDB = $BACKUP/$db.sql
 		$MYSQLDUMP --opt -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $db > $FILEDB
 		$ZIP $FILE $FILEDB
+		rm -f $FILEDB
 	fi
 done
 
