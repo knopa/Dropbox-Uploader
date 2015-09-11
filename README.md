@@ -9,7 +9,7 @@ It's written in BASH scripting language and only needs **cURL**.
 * **Portable:** It's written in BASH scripting and only needs *cURL* (curl is a tool to transfer data from or to a server, available for all operating systems and installed by default in many linux distributions).
 * **Secure:** It's not required to provide your username/password to this script, because it uses the official Dropbox API for the authentication process. 
 
-Please refer to the &lt;Wiki&gt;(https://github.com/knopa/Dropbox-Uploader/wiki) for tips and additional information about this project. The Wiki is also the place where you can share your scripts and examples related to Dropbox Uploader.
+Please refer to the &lt;Wiki&gt;(https://github.com/andreafabrizi/Dropbox-Uploader/wiki) for tips and additional information about this project. The Wiki is also the place where you can share your scripts and examples related to Dropbox Uploader.
 
 ## Features
 
@@ -29,13 +29,13 @@ Please refer to the &lt;Wiki&gt;(https://github.com/knopa/Dropbox-Uploader/wiki)
 First, clone the repository using git (recommended):
 
 ```bash
-git clone https://github.com/knopa/Dropbox-Uploader/
+git clone https://github.com/andreafabrizi/Dropbox-Uploader/
 ```
 
 or download the script manually using this command:
 
 ```bash
-curl "https://raw.githubusercontent.com/knopa/Dropbox-Uploader/master/dropbox_uploader.sh" -o dropbox_uploader.sh
+curl "https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh" -o dropbox_uploader.sh
 ```
 
 Then give the execution permission to the script and run it:
@@ -93,7 +93,10 @@ List the contents of the remote Dropbox folder
 
 * **share** &lt;REMOTE_FILE&gt;  
 Get a public share link for the specified file or directory
- 
+
+* **saveurl** &lt;URL&gt; &lt;REMOTE_DIR&gt;  
+Download a file from an URL to a Dropbox folder directly (the file is NOT downloaded locally)
+
 * **info**  
 Print some info about your Dropbox account
 
